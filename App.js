@@ -38,6 +38,7 @@ export default class App extends React.Component {
       confirmVisible: false,
       updateEnable: true,
       selecteditem: null,
+      isShowToTop: false,
     };
   }
 
@@ -140,6 +141,7 @@ _pickImage = async () => {
     this.limpaCampos();
 
   }
+
 /////////////////////////////////////////////////////////////////////
 //APAGAR REGISTRO
   deleteItem(item) {
@@ -347,6 +349,7 @@ _pickImage = async () => {
                 Pesquisar
               </Button>
             <FlatList
+              onScroll={(e)=>this._onScroll(e)}
               data={this.state.products}
               renderItem={({ item }) => (
                 <View>
@@ -355,9 +358,20 @@ _pickImage = async () => {
                       <View style={{ paddingTop: 10 }}>
                         <Text
                           style={{ color: '#4B0082' }}
-                          onPress={() => this.deleteItem(item)}>
-                          <Ionicons name="md-trash" size={20} />
+                          >
+                          <Ionicons onPress={() => this.deleteItem(item)} name="md-trash" size={20} />
+                          <Text>     </Text>   
+                          <Ionicons  onPress={() =>
+                              this.setState({
+                                name: item.name,
+                                description: item.description,
+                                price: item.price,
+                                updateEnable: false,
+                                selecteditem: item,
+                              })
+                            } name="md-create" size={20} />
                         </Text>
+                        
                       </View>
                     </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback
